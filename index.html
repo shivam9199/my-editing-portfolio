@@ -3477,9 +3477,16 @@ runWhenReady(() => {
 
       if (supabaseClient) {
         try {
+          const supabaseData = {
+            name: newReview.name,
+            instagram: newReview.instagram,
+            rating: newReview.rating,
+            comment: newReview.comment,
+            created_at: newReview.created_at
+          };
           const { error } = await supabaseClient
             .from('reviews')
-            .insert([newReview]);
+            .insert([supabaseData]);
           if (error) throw error;
           savedToSupabase = true;
           saveLocalReview(newReview);
