@@ -963,6 +963,33 @@ body::before {
 .review-toast.toast-error { border-color: rgba(255,77,0,0.4); }
 .review-toast.toast-warn { border-color: rgba(255,183,0,0.4); }
 
+.review-side-popup {
+  position: fixed;
+  top: 20%;
+  right: 20px;
+  max-width: 280px;
+  background: rgba(18,18,18,0.95);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 16px 18px;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.25);
+  opacity: 0;
+  transform: translateX(60px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 99999;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.review-side-popup.show { opacity: 1; transform: translateX(0); }
+.review-side-popup.success { border-color: rgba(37,211,102,0.4); }
+.review-side-popup.error { border-color: rgba(255,77,0,0.4); }
+.review-form-notes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.review-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); color: #eee; }
+.review-pill-public { color: #7cff9d; border-color: rgba(124,255,157,0.25); }
+.review-pill-safety { color: #f9d371; border-color: rgba(249,211,113,0.25); }
+.review-info-text { color: rgba(255,255,255,0.68); font-size: 12px; margin-top: 8px; }
+
 /* CHAR COUNTER */
 .char-counter {
   text-align: right;
@@ -2050,6 +2077,11 @@ body::before {
           <span data-val="5" class="selected">&#9733;</span>
         </div>
         <input type="hidden" id="reviewRating" value="5">
+        <div class="review-form-notes">
+          <span class="review-pill review-pill-public" id="reviewPublicStatus">Public review visible to everyone.</span>
+          <span class="review-pill review-pill-safety" id="reviewSafetyStatus">Abuse detection active</span>
+        </div>
+        <div class="review-info-text" id="reviewConnectionInfo">Your review will be saved to Supabase when possible.</div>
       </div>
       <div class="form-group reason-group" id="reasonGroup" style="display:none;">
         <label for="reviewReason">What went wrong? <span style="color:var(--accent);font-size:11px;">*Required</span></label>
@@ -2071,6 +2103,7 @@ body::before {
       <button type="submit" class="btn-primary" id="reviewSubmitBtn" style="width:100%;justify-content:center;"><span id="submitBtnText">Submit Review</span></button>
       <div id="reviewFormMessage" style="color:#ff4d00;font-size:13px;line-height:1.4;margin-top:14px;min-height:22px;"></div>
     </form>
+    <div class="review-side-popup" id="reviewSidePopup" aria-live="polite"></div>
   </div>
 </div>
 
@@ -3178,6 +3211,68 @@ function showToast(message, type = 'success', duration = 4000) {
   }, duration);
 }
 
+function showSidePopup(message, type = 'success', duration = 4200) {
+  const popup = document.getElementById('reviewSidePopup');
+  if (!popup) return;
+  popup.textContent = message;
+  popup.className = `review-side-popup show ${type}`;
+  clearTimeout(popup._timer);
+  popup._timer = setTimeout(() => {
+    popup.className = 'review-side-popup';
+  }, duration);
+}
+
+function playSuccessChime() {
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const now = ctx.currentTime;
+    const gain = ctx.createGain();
+    const osc = ctx.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(880, now);
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.15, now + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.35);
+    osc.onended = () => {
+      if (ctx.close) ctx.close();
+    };
+  } catch (err) {
+    console.warn('Success chime failed', err);
+  }
+}
+
+function updateReviewConnectionStatus() {
+  const statusEl = document.getElementById('reviewConnectionInfo');
+  const publicStatusEl = document.getElementById('reviewPublicStatus');
+  const safetyStatusEl = document.getElementById('reviewSafetyStatus');
+
+  if (publicStatusEl) {
+    if (supabaseClient) {
+      publicStatusEl.textContent = 'Public review visible to everyone.';
+      publicStatusEl.classList.add('review-pill-public');
+    } else {
+      publicStatusEl.textContent = 'Offline review stored locally, not yet public.';
+      publicStatusEl.classList.remove('review-pill-public');
+    }
+  }
+
+  if (safetyStatusEl) {
+    safetyStatusEl.textContent = 'Abuse detection active — comments are moderated for spam and abuse.';
+  }
+
+  if (statusEl) {
+    statusEl.textContent = supabaseClient
+      ? 'Supabase connected. Your review posts live when submitted.'
+      : 'Supabase unavailable. Reviews are stored locally and sync when connection returns.';
+  }
+}
+
 // --- Anti-Spam: 1 review per 24 hours per device ---
 function canSubmitReview() {
   try {
@@ -3214,7 +3309,11 @@ runWhenReady(() => {
     modal.classList.remove('active');
     document.body.style.overflow = '';
   }
-  if (openBtn)  openBtn.addEventListener('click', openModal);
+  if (openBtn)  openBtn.addEventListener('click', () => {
+    openModal();
+    setFormMessage('');
+    updateReviewConnectionStatus();
+  });
   if (closeBtn) closeBtn.addEventListener('click', closeModal);
   if (modal)    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
 
@@ -3383,18 +3482,28 @@ runWhenReady(() => {
             .insert([newReview]);
           if (error) throw error;
           savedToSupabase = true;
+          saveLocalReview(newReview);
+          addNewReviewToUI(newReview, true);
           setFormMessage('');
           showToast('🎉 Your review is now live! Thank you!', 'success');
+          showSidePopup('Thank you for reviewing — your feedback is live!', 'success');
+          playSuccessChime();
         } catch (err) {
           console.error('Supabase error, falling back to local:', err);
           saveLocalReview(newReview);
           addNewReviewToUI(newReview, true);
-          showToast('✅ Review submitted! (saved locally)', 'success');
+          setFormMessage('Saved locally because Supabase was unavailable. It will become public once sync works.');
+          showToast('✅ Review submitted! Saved locally.', 'success');
+          showSidePopup('Review saved locally. We will sync it soon.', 'success');
+          playSuccessChime();
         }
       } else {
         saveLocalReview(newReview);
         addNewReviewToUI(newReview, true);
+        setFormMessage('Saved locally because Supabase is not connected.');
         showToast('🎉 Review submitted successfully!', 'success');
+        showSidePopup('Review saved locally in your browser.', 'success');
+        playSuccessChime();
       }
 
       // 7. MARK SUBMITTED (anti-spam)
@@ -3417,6 +3526,7 @@ runWhenReady(() => {
   }
 
   // Load reviews initial
+  updateReviewConnectionStatus();
   loadReviews();
 
   // Supabase Realtime Subscription
