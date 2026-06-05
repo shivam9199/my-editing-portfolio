@@ -16,6 +16,9 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 body::after{content:'';position:fixed;inset:0;background:radial-gradient(circle at 50% 0%, rgba(255,77,0,0.05), transparent 70%);pointer-events:none;z-index:-1;animation:pulseBg 8s ease-in-out infinite alternate;}
 @keyframes pulseBg { from { opacity: 0.5; } to { opacity: 1; transform: scale(1.05); } }
 
+/* PARTICLE CANVAS */
+#particleCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.6;}
+
 /* HERO */
 .hero-wrap{min-height:100vh;display:flex;align-items:center;justify-content:space-between;padding:120px 6vw 80px;gap:60px;position:relative;overflow:hidden;}
 .hero-wrap::before{content:'';position:absolute;top:-200px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(255,77,0,0.03) 0%,transparent 70%);pointer-events:none;}
@@ -73,6 +76,7 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(circle 
   -webkit-text-fill-color: transparent;
   display: block;
   margin-bottom: 8px;
+  filter: drop-shadow(0 0 18px rgba(255,77,0,0.35));
 }
 .stat-label {
   font-family: 'DM Sans', sans-serif;
@@ -81,6 +85,140 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(circle 
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
+}
+
+/* MARQUEE TICKER */
+.marquee-section {
+  overflow: hidden;
+  padding: 24px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,77,0,0.02);
+  position: relative;
+}
+.marquee-track {
+  display: flex;
+  gap: 48px;
+  animation: marqueeScroll 28s linear infinite;
+  width: max-content;
+}
+.marquee-section:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.3);
+  white-space: nowrap;
+  transition: color 0.3s;
+}
+.marquee-item:hover {
+  color: var(--accent2);
+}
+.marquee-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+/* SITE FOOTER */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 48px 6vw 32px;
+  position: relative;
+  overflow: hidden;
+}
+.site-footer::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+  background: var(--accent-gradient);
+  opacity: 0.3;
+}
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.footer-brand .logo {
+  font-size: 28px;
+  margin-bottom: 10px;
+  display: block;
+}
+.footer-brand p {
+  font-size: 13px;
+  color: var(--muted);
+  max-width: 260px;
+  line-height: 1.6;
+}
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer-links h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.footer-links a {
+  font-size: 14px;
+  color: rgba(255,255,255,0.45);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-links a:hover {
+  color: var(--accent2);
+}
+.footer-bottom {
+  max-width: 1200px;
+  margin: 32px auto 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.footer-bottom p {
+  font-size: 12px;
+  color: rgba(255,255,255,0.25);
+}
+.footer-bottom a {
+  color: var(--accent2);
+  text-decoration: none;
+}
+@media (max-width: 600px) {
+  .footer-inner {
+    flex-direction: column;
+    gap: 28px;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
 }
 
 
@@ -1419,6 +1557,7 @@ body::before {
 </header>
 
 <section class="hero-wrap">
+  <canvas id="particleCanvas" aria-hidden="true"></canvas>
   <!-- FLOATING BACKGROUND TAGS -->
   <div class="floating-tags">
     <div class="float-tag" style="top: 15%; left: 8%; animation-delay: 0s;">✨ AFTER EFFECTS</div>
@@ -1525,6 +1664,34 @@ body::before {
   </div>
 
 </section>
+
+<!-- TOOL MARQUEE TICKER -->
+<div class="marquee-section" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack">
+    <div class="marquee-item">Adobe Premiere Pro <span class="marquee-dot"></span></div>
+    <div class="marquee-item">After Effects <span class="marquee-dot"></span></div>
+    <div class="marquee-item">AI Video Generation <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Scroll-Stop Edits <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Sound Design <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Motion Graphics <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Color Grading <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Reels & Shorts <span class="marquee-dot"></span></div>
+    <div class="marquee-item">YouTube Editing <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Faceless AI Videos <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Thumbnail Design <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Adobe Premiere Pro <span class="marquee-dot"></span></div>
+    <div class="marquee-item">After Effects <span class="marquee-dot"></span></div>
+    <div class="marquee-item">AI Video Generation <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Scroll-Stop Edits <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Sound Design <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Motion Graphics <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Color Grading <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Reels & Shorts <span class="marquee-dot"></span></div>
+    <div class="marquee-item">YouTube Editing <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Faceless AI Videos <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Thumbnail Design <span class="marquee-dot"></span></div>
+  </div>
+</div>
 
 <!-- SERVICES / PRICING -->
 <div class="section-head" id="services">
@@ -1695,7 +1862,7 @@ body::before {
 <section class="proof-section">
   <div class="proof-card-single">
     <div class="insta-icon">
-      <img src="./public/instagram/instagram.png" alt="Instagram" style="width:36px;height:36px;object-fit:contain;" id="proofInstaIcon" onerror="this.style.display='none';document.getElementById('proofInstaSvg').style.display='inline-block';">
+      <img src="/instagram/instagram.png" alt="Instagram" style="width:36px;height:36px;object-fit:contain;" id="proofInstaIcon" onerror="this.style.display='none';document.getElementById('proofInstaSvg').style.display='inline-block';">
       <svg id="proofInstaSvg" width="36" height="36" viewBox="0 0 24 24" fill="url(#instagram-gradient)" style="display:none;">
         <defs>
           <radialGradient id="instagram-gradient" cx="0.5" cy="0.5" r="0.5">
@@ -1837,13 +2004,40 @@ body::before {
     Message me on WhatsApp
   </a>
   <a class="insta-btn" href="https://instagram.com/rewire_sync" target="_blank">
-    <img src="./public/instagram/instagram.png" alt="Instagram" class="insta-btn-icon" id="instaIcon" onerror="this.style.display='none';document.getElementById('instaSvgFallback').style.display='inline-block';">
+    <img src="/instagram/instagram.png" alt="Instagram" class="insta-btn-icon" id="instaIcon" onerror="this.style.display='none';document.getElementById('instaSvgFallback').style.display='inline-block';">
     <svg class="insta-btn-icon insta-btn-fallback" id="instaSvgFallback" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
       <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
     </svg>
     Follow on Instagram
   </a>
 </div>
+
+<!-- SITE FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#" class="logo">Sh<span class="i-wrap">ı<span class="i-dot"></span></span>vam<span>Creates.</span></a>
+      <p>Video editing & AI content creation — turning raw footage into scroll-stopping stories. Based in India, editing for creators worldwide.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Navigation</h4>
+      <a href="#services">Packages</a>
+      <a href="#process">Process</a>
+      <a href="#about">About</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="footer-links">
+      <h4>Connect</h4>
+      <a href="https://instagram.com/rewire_sync" target="_blank">Instagram ↗</a>
+      <a href="https://wa.me/9199495542" target="_blank">WhatsApp ↗</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 ShivamCreates. All rights reserved.</p>
+    <p>Made with ❤️ by <a href="#">Shivam</a></p>
+  </div>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -2014,30 +2208,41 @@ heroObserver.observe(hero);
 
 // --- NEW MOTION SYSTEM LOGIC ---
 
-// 1. Stats Counter Animation
-function animateCounter(el, target) {
+// 1. Stats Counter Animation (suffix-preserving)
+function animateCounter(el) {
+  const raw = el.dataset.target || el.textContent.trim();
+  el.dataset.target = raw; // store original
+  // Parse: number + suffix (e.g. "50+", "3 days", "100%")
+  const match = raw.match(/^(\d+)(.*)$/);
+  if (!match) return;
+  const target = parseInt(match[1]);
+  const suffix = match[2] || '';
   let current = 0;
-  const duration = 2000;
-  const step = target / (duration / 16);
-  const timer = setInterval(() => {
-    current += step;
-    if (current >= target) {
-      el.textContent = target + (el.textContent.includes('+') ? '+' : (el.textContent.includes('days') ? ' days' : '%'));
-      el.style.transform = 'scale(1.2)';
-      setTimeout(() => el.style.transform = 'scale(1)', 200);
-      clearInterval(timer);
+  const duration = 1800;
+  const startTime = performance.now();
+  const easeOut = (t) => 1 - Math.pow(1 - t, 3); // cubic ease-out
+  function tick(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    current = Math.round(easeOut(progress) * target);
+    el.textContent = current + suffix;
+    if (progress < 1) {
+      requestAnimationFrame(tick);
     } else {
-      el.textContent = Math.floor(current) + (el.textContent.includes('+') ? '+' : (el.textContent.includes('days') ? ' days' : '%'));
+      el.textContent = target + suffix;
+      // Pop effect on finish
+      el.style.filter = 'drop-shadow(0 0 28px rgba(255,77,0,0.7))';
+      setTimeout(() => el.style.filter = '', 400);
     }
-  }, 16);
+  }
+  requestAnimationFrame(tick);
 }
 
 const statsObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.querySelectorAll('.stat-num').forEach(num => {
-        const val = parseInt(num.textContent);
-        animateCounter(num, val);
+        animateCounter(num);
       });
       statsObserver.unobserve(entry.target);
     }
@@ -2475,6 +2680,80 @@ if (servicesSection) {
 
 // Initialize first frame and video play
 render(true);
+
+// ---- PARTICLE CANVAS ANIMATION ----
+(function() {
+  const canvas = document.getElementById('particleCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], animId;
+  const PARTICLE_COUNT = 55;
+  const COLORS = ['rgba(255,77,0,', 'rgba(255,183,0,', 'rgba(255,120,0,'];
+
+  function resize() {
+    const hero = canvas.closest('.hero-wrap');
+    W = canvas.width  = hero ? hero.offsetWidth  : window.innerWidth;
+    H = canvas.height = hero ? hero.offsetHeight : window.innerHeight;
+  }
+
+  function randomParticle() {
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.8 + 0.4,
+      dx: (Math.random() - 0.5) * 0.35,
+      dy: -(Math.random() * 0.4 + 0.1),
+      alpha: Math.random() * 0.5 + 0.1,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      life: Math.random() * 200 + 100,
+      age: 0
+    };
+  }
+
+  function init() {
+    resize();
+    particles = Array.from({ length: PARTICLE_COUNT }, randomParticle);
+    window.removeEventListener('resize', resize);
+    window.addEventListener('resize', resize, { passive: true });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach((p, i) => {
+      p.age++;
+      if (p.age > p.life) {
+        particles[i] = randomParticle();
+        particles[i].y = H + 5; // start from bottom
+        return;
+      }
+      const fade = p.age < 30 ? p.age / 30 : (p.life - p.age) < 40 ? (p.life - p.age) / 40 : 1;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.color + (p.alpha * fade) + ')';
+      ctx.fill();
+      p.x += p.dx;
+      p.y += p.dy;
+    });
+    animId = requestAnimationFrame(draw);
+  }
+
+  // Only run when hero is in view
+  const heroSection = canvas.closest('.hero-wrap');
+  if (heroSection) {
+    const visObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (!animId) { init(); draw(); }
+        } else {
+          cancelAnimationFrame(animId); animId = null;
+        }
+      });
+    }, { threshold: 0.1 });
+    visObs.observe(heroSection);
+  } else {
+    init(); draw();
+  }
+})();
 
 // ---- REVIEWS & SUPABASE INTEGRATION ----
 const SUPABASE_URL = ""; 
