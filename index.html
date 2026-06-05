@@ -2043,10 +2043,10 @@ body::before {
       <div class="form-group">
         <label>Your Rating *</label>
         <div class="rating-select" id="ratingSelect">
-          <span data-val="1">&#9733;</span>
-          <span data-val="2">&#9733;</span>
-          <span data-val="3">&#9733;</span>
-          <span data-val="4">&#9733;</span>
+          <span data-val="1" class="selected">&#9733;</span>
+          <span data-val="2" class="selected">&#9733;</span>
+          <span data-val="3" class="selected">&#9733;</span>
+          <span data-val="4" class="selected">&#9733;</span>
           <span data-val="5" class="selected">&#9733;</span>
         </div>
         <input type="hidden" id="reviewRating" value="5">
@@ -2068,7 +2068,8 @@ body::before {
         <div class="char-counter" id="charCounter" style="text-align:right;font-size:11px;color:#888;margin-top:4px;">0 / 300</div>
         <div class="field-error" id="commentError" style="display:none;color:#ff4d00;font-size:12px;margin-top:4px;">Review must be 20-300 chars.</div>
       </div>
-      <button type="submit" class="btn-primary" id="reviewSubmitBtn" style="width:100%;justify-content:center;">Submit Review</button>
+      <button type="submit" class="btn-primary" id="reviewSubmitBtn" style="width:100%;justify-content:center;"><span id="submitBtnText">Submit Review</span></button>
+      <div id="reviewFormMessage" style="color:#ff4d00;font-size:13px;line-height:1.4;margin-top:14px;min-height:22px;"></div>
     </form>
   </div>
 </div>
@@ -2930,8 +2931,8 @@ render(true);
 })();
 
 // ---- REVIEWS & SUPABASE INTEGRATION ----
-const SUPABASE_URL = ""; 
-const SUPABASE_ANON_KEY = ""; 
+const SUPABASE_URL = "https://rnsggdyxopuoquwaanmb.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJuc2dnZHl4b3B1b3F1d2Fhbm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA2NzczODAsImV4cCI6MjA5NjI1MzM4MH0.2Ryf1HI5E94DtGLgSwqOi7o_O-VVd4dvSOwhWJK1QrM";
 
 let supabaseClient = null;
 if (SUPABASE_URL && SUPABASE_ANON_KEY) {
@@ -3092,22 +3093,36 @@ function escapeHTML(str) {
 
 // --- Content Moderation Word List (English + Hindi transliteration) ---
 const BLOCKED_WORDS = [
-  // English profanity
-  'fuck','shit','bitch','bastard','asshole','ass','cunt','damn','crap','piss','dick','cock',
-  'pussy','slut','whore','nigga','nigger','faggot','retard','idiot','moron','stupid','dumb',
-  // Hindi transliteration
-  'bsdk','bc','mc','lodu','chutiya','gandu','madarchod','bhenchod','maderchod','bhosdi',
-  'gaand','randi','harami','haraami','saala','kamina','sala','behen','teri maa','maa ki',
-  'kutte','kuttey','suar','gadha','ullu','chodu','bhosdike','lauda','lavda',
-  // Scam / abuse words
-  'scam','fraud','liar','cheat','scammer','thief','cheater','fake'
+  // Hindi abusive words and manipulated spellings
+  'chutiya','chuitya','chutya','chuttiya','chutiiya','chuuuuuuuuuutiya','mc','bc','bhosdike',
+  'bhosdiwale','bhenchod','behenchod','behnchod','madarchod','maderchod','gaand','gandu','lund',
+  'lodu','lavde','lawde','randi','randiwala','harami','haraamzada','kutta','kamina','nalayak',
+  'bakchod','bakchodi','jhatu','jhant','dhokebaaz','dhokebaj',
+  // English abusive / toxic
+  'fuck','fucking','fucker','motherfucker','mf','shit','bullshit','asshole','bastard','bitch',
+  'sonofabitch','dick','cock','pussy','whore','slut','retard','idiot','moron','stupid','loser',
+  'scumbag','jerk',
+  // Scam / trust related
+  'fraud','scam','scammer','fake','cheater','thief','chor','bewakoof','loot','looter','criminal',
+  // Spam-related phrases
+  'crypto','bitcoin giveaway','earn money fast','casino','betting','loan','investment scheme','telegram channel',
+  'whatsapp group','click here','free money'
 ];
 
+function normalizeText(text) {
+  if (!text) return '';
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9 ]/g, ' ')
+    .replace(/([a-z0-9])\1+/g, (match, char) => char)
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function moderateText(text) {
-  const lower = text.toLowerCase();
-  // Check for blocked words (whole-word and partial match for transliterated words)
+  const normalized = normalizeText(text);
   for (const word of BLOCKED_WORDS) {
-    if (lower.includes(word)) {
+    if (normalized.includes(word)) {
       return { blocked: true, word };
     }
   }
@@ -3160,6 +3175,7 @@ runWhenReady(() => {
   const commentTA    = document.getElementById('reviewComment');
   const submitBtn    = document.getElementById('reviewSubmitBtn');
   const submitText   = document.getElementById('submitBtnText');
+  const formMessage  = document.getElementById('reviewFormMessage');
 
   // --- Open / Close Modal ---
   function openModal() {
@@ -3186,6 +3202,9 @@ runWhenReady(() => {
   // --- Star Rating + Reason Group ---
   if (ratingSelect) {
     const stars = ratingSelect.querySelectorAll('span');
+    const currentRating = parseInt(ratingInput.value) || 5;
+    stars.forEach(s => s.classList.toggle('selected', currentRating >= parseInt(s.dataset.val)));
+
     stars.forEach(star => {
       star.addEventListener('click', () => {
         const val = parseInt(star.dataset.val);
@@ -3200,9 +3219,10 @@ runWhenReady(() => {
         const val = parseInt(star.dataset.val);
         stars.forEach(s => s.classList.toggle('hovered', val >= parseInt(s.dataset.val)));
       });
-      ratingSelect.addEventListener('mouseleave', () => {
-        stars.forEach(s => s.classList.remove('hovered'));
-      });
+    });
+
+    ratingSelect.addEventListener('mouseleave', () => {
+      stars.forEach(s => s.classList.remove('hovered'));
     });
   }
 
@@ -3213,6 +3233,12 @@ runWhenReady(() => {
     if (inp) inp.classList.toggle('error', show);
     if (err) err.classList.toggle('show', show);
     return show;
+  }
+
+  function setFormMessage(message) {
+    if (formMessage) {
+      formMessage.textContent = message || '';
+    }
   }
 
   // --- Form Submit ---
@@ -3242,23 +3268,44 @@ runWhenReady(() => {
       const comment  = commentTA ? commentTA.value.trim() : '';
       const reason   = document.getElementById('reviewReason') ? document.getElementById('reviewReason').value : '';
 
+      setFormMessage('');
+
       // 3. FIELD VALIDATION
       let hasError = false;
-      if (name.length < 2) hasError = setError('reviewName', 'nameError', true) || hasError;
-      else setError('reviewName', 'nameError', false);
+      let formError = '';
+      if (name.length < 2) {
+        hasError = setError('reviewName', 'nameError', true) || hasError;
+        formError = 'Name must be at least 2 characters.';
+      } else {
+        setError('reviewName', 'nameError', false);
+      }
 
-      if (comment.length < 20) hasError = setError('reviewComment', 'commentError', true) || hasError;
-      else setError('reviewComment', 'commentError', false);
+      if (comment.length < 20) {
+        hasError = setError('reviewComment', 'commentError', true) || hasError;
+        if (!formError) formError = 'Review must be 20-300 characters.';
+      } else {
+        setError('reviewComment', 'commentError', false);
+      }
+
+      // Reject too many emojis
+      const emojiCount = (comment.match(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu) || []).length;
+      if (emojiCount > 5) {
+        showToast('Please use fewer than 6 emojis in your review.', 'error', 5000);
+        formError = 'Please use fewer than 6 emojis in your review.';
+        hasError = true;
+      }
 
       // Low rating requires reason
       if (rating <= 3 && !reason) {
         hasError = setError('reviewReason', 'reasonError', true) || hasError;
+        if (!formError) formError = 'Please select a reason for your low rating.';
       } else {
         setError('reviewReason', 'reasonError', false);
       }
 
       if (hasError) {
-        showToast('Please fill in all required fields correctly.', 'error');
+        setFormMessage(formError || 'Please fill in all required fields correctly.');
+        showToast(formError || 'Please fill in all required fields correctly.', 'error');
         return;
       }
 
@@ -3266,7 +3313,10 @@ runWhenReady(() => {
       const nameCheck    = moderateText(name);
       const commentCheck = moderateText(comment);
       if (nameCheck.blocked || commentCheck.blocked) {
-        showToast('⚠️ Please keep your review respectful and professional. Abusive language is not allowed.', 'error', 6000);
+        const blockedWord = nameCheck.blocked ? nameCheck.word : commentCheck.word;
+        const message = `Your review contains blocked language (${blockedWord}). Please keep it respectful.`;
+        setFormMessage(message);
+        showToast(`⚠️ ${message}`, 'error', 6000);
         if (commentCheck.blocked && commentTA) {
           commentTA.classList.add('error');
           setTimeout(() => commentTA.classList.remove('error'), 3000);
@@ -3296,9 +3346,10 @@ runWhenReady(() => {
         try {
           const { error } = await supabaseClient
             .from('reviews')
-            .insert([{ name, instagram, rating, comment }]);
+            .insert([newReview]);
           if (error) throw error;
           savedToSupabase = true;
+          setFormMessage('');
           showToast('🎉 Your review is now live! Thank you!', 'success');
         } catch (err) {
           console.error('Supabase error, falling back to local:', err);
@@ -3340,6 +3391,7 @@ runWhenReady(() => {
       .channel('public:reviews')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'reviews' }, payload => {
         addNewReviewToUI(payload.new, true);
+        showToast('✨ New review added live from Supabase!', 'info', 4500);
       })
       .subscribe();
   }
