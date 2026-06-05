@@ -175,47 +175,289 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(circle 
 .section-label{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#8e8e8e;margin-bottom:8px;}
 .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px, 5vw, 48px);font-weight:400;letter-spacing:0.04em;color:#f8f8f8;text-transform:uppercase;}
 .section-title .accent{background:var(--accent-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.grid{padding:0 6vw;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;perspective:1000px;}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,0.18);transition:transform .3s cubic-bezier(0.25, 0.8, 0.25, 1),border-color .3s,box-shadow .3s;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
-.card:hover{transform:translateY(-8px) rotateX(2.5deg) rotateY(-1.5deg);border-color:rgba(255, 77, 0, 0.25);box-shadow:0 25px 60px rgba(255, 77, 0, 0.12);}
-.card-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
-.icon-box{width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.icon-box svg{width:22px;height:22px;stroke:var(--accent2);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
-.card-title{font-size:24px;font-weight:400;color:#fff;font-family:'Bebas Neue',sans-serif;letter-spacing:0.04em;text-transform:uppercase;}
-.card-desc{font-size:14px;color:#d4d4d4;line-height:1.75;margin-bottom:16px;font-family:'DM Sans',sans-serif;}
-.feature-list{list-style:none;padding:0;margin:0 0 18px;display:flex;flex-direction:column;gap:10px;}
-.feature-list li{font-size:13px;color:#ccc;display:flex;align-items:flex-start;gap:10px;line-height:1.7;font-family:'DM Sans',sans-serif;}
-.feature-list li svg{width:14px;height:14px;stroke:var(--accent2);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;margin-top:3px;}
-.typewrite{display:inline-block;width:100%;white-space:pre-wrap;overflow:hidden;vertical-align:top;font-family:'DM Sans',sans-serif;}
-.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
-.tag{font-size:12px;font-family:'DM Sans',sans-serif;border:1px solid rgba(255,255,255,0.06);border-radius:999px;padding:6px 12px;color:#bbb;background:rgba(255,255,255,0.02);}
-.price{font-size:18px;font-weight:700;color:var(--accent2);font-family:'DM Sans',sans-serif;}
-.price-note{font-size:12px;color:#7a7a7a;margin-top:4px;font-family:'DM Sans',sans-serif;}
-.delivery-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px;grid-column:1 / -1;box-shadow:0 20px 60px rgba(0,0,0,0.18);transition:transform .3s cubic-bezier(0.25, 0.8, 0.25, 1),border-color .3s,box-shadow .3s;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
-.delivery-card:hover{transform:translateY(-8px) rotateX(1.5deg) rotateY(-0.8deg);border-color:rgba(255, 77, 0, 0.25);box-shadow:0 25px 60px rgba(255, 77, 0, 0.12);}
-.delivery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;margin-top:18px;}
-.d-item{display:flex;align-items:flex-start;gap:12px;}
-.d-icon{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.d-icon svg{width:18px;height:18px;stroke:var(--accent2);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
-.d-label{font-size:20px;font-weight:400;color:#fff;font-family:'Bebas Neue',sans-serif;letter-spacing:0.04em;text-transform:uppercase;}
-.d-sub{font-size:12.5px;color:#8e8e8e;line-height:1.6;margin-top:4px;font-family:'DM Sans',sans-serif;}
-.d-meta{font-size:12px;color:#7a7a7a;margin-top:4px;font-family:'DM Sans',sans-serif;}
-
-.process{max-width:1200px;margin:0 auto;padding:0 6vw;position:relative;}
-.process-step{display:flex;gap:24px;padding:32px 0;border-bottom:1px solid var(--border);position:relative;transition:all 0.3s ease;}
-.process-step:last-child{border-bottom:none;}
-.process-step::before{content:'';position:absolute;left:18px;top:70px;bottom:0;width:1px;background:linear-gradient(to bottom, var(--border), transparent);z-index:0;}
-.process-step:last-child::before{display:none;}
-.step-num{font-family:'Bebas Neue',sans-serif;font-size:36px;font-weight:400;letter-spacing:0.05em;color:rgba(255,255,255,0.1);line-height:1;min-width:40px;padding-top:2px;z-index:1;transition:all 0.3s ease;text-shadow: 0 0 20px rgba(255,77,0,0.05);}
-.process-step:hover .step-num, .process-step.active .step-num{color:var(--accent2);text-shadow: 0 0 20px rgba(255,77,0,0.3);}
-.step-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.04em;font-weight:400;margin-bottom:6px;color:var(--text);transition:color 0.3s ease;text-transform:uppercase;}
-.process-step:hover .step-title, .process-step.active .step-title{color:var(--accent2);}
-.step-desc{font-size:14px;color:var(--muted);line-height:1.6;max-width:500px;}
-@media(max-width:600px){
-  .process-step{gap:16px;padding:24px 0;}
-  .step-num{font-size:24px;min-width:30px;}
-  .process-step::before{left:15px;top:55px;}
+/* Pricing Grid Styles */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  padding: 0 6vw;
+  align-items: stretch;
+  max-width: 1200px;
+  margin: 0 auto 48px;
 }
+@media (max-width: 992px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+.price-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 36px 32px;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.price-card:hover {
+  border-color: rgba(255, 77, 0, 0.25);
+  box-shadow: 0 25px 60px rgba(255, 77, 0, 0.15);
+  transform: translateY(-8px);
+}
+.price-card.popular {
+  border-color: var(--accent);
+  box-shadow: 0 0 30px rgba(255, 77, 0, 0.15);
+  background: linear-gradient(180deg, rgba(255, 77, 0, 0.03) 0%, rgba(18, 18, 18, 0.85) 100%);
+  transform: scale(1.03);
+}
+@media (max-width: 992px) {
+  .price-card.popular {
+    transform: scale(1);
+  }
+}
+.popular-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: var(--accent-gradient);
+  color: #0d0d0d;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  padding: 4px 14px;
+  border-radius: 99px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(255,77,0,0.3);
+}
+.price-header {
+  margin-bottom: 24px;
+}
+.price-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.04em;
+  color: #fff;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.price-amount {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 48px;
+  color: var(--accent2);
+  line-height: 1;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.price-amount span {
+  font-size: 16px;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--muted);
+  text-transform: none;
+  letter-spacing: 0;
+}
+.price-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.price-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.price-features li {
+  font-size: 14px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.price-features li svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--accent2);
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+.price-cta {
+  width: 100%;
+  text-align: center;
+  padding: 12px;
+  border-radius: 8px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: block;
+}
+.price-card.popular .price-cta {
+  background: var(--accent-gradient);
+  color: #0d0d0d;
+  border: none;
+  box-shadow: 0 4px 15px rgba(255, 77, 0, 0.3);
+}
+.price-card.popular .price-cta:hover {
+  box-shadow: 0 0 25px rgba(255, 77, 0, 0.5);
+  transform: translateY(-2px);
+}
+.price-card:not(.popular) .price-cta {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+}
+.price-card:not(.popular) .price-cta:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.03);
+  transform: translateY(-2px);
+}
+
+/* Redesigned Process Section */
+.process {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 6vw;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.process::before {
+  content: '';
+  position: absolute;
+  left: calc(6vw + 24px);
+  top: 60px;
+  bottom: 60px;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.05);
+  z-index: 1;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+.process:hover::before {
+  background: var(--accent);
+  box-shadow: 0 0 15px rgba(255, 77, 0, 0.4);
+}
+.process-step {
+  display: flex;
+  gap: 32px;
+  padding: 40px 0;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+.step-icon-wrap {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 3;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  color: var(--muted);
+}
+.step-icon-wrap svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.process-step:hover .step-icon-wrap, .process-step.active .step-icon-wrap {
+  border-color: var(--accent);
+  background: var(--bg);
+  color: var(--accent2);
+  box-shadow: 0 0 20px rgba(255, 77, 0, 0.3);
+  transform: scale(1.1);
+}
+.step-content {
+  flex: 1;
+  position: relative;
+}
+.step-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  letter-spacing: 0.05em;
+  font-weight: 400;
+  margin-bottom: 8px;
+  color: var(--text);
+  transition: color 0.3s ease;
+  text-transform: uppercase;
+}
+.process-step:hover .step-title, .process-step.active .step-title {
+  color: var(--accent2);
+}
+.step-desc {
+  font-size: 14.5px;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 550px;
+}
+.step-bg-num {
+  position: absolute;
+  right: 0;
+  bottom: -10px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(80px, 15vw, 130px);
+  line-height: 0.8;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.02);
+  pointer-events: none;
+  z-index: 1;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+.process-step:hover .step-bg-num, .process-step.active .step-bg-num {
+  color: rgba(255, 77, 0, 0.05);
+  transform: translateY(-5px);
+}
+@media(max-width:768px) {
+  .process::before {
+    left: calc(4vw + 20px);
+  }
+  .process-step {
+    gap: 20px;
+    padding: 30px 0;
+  }
+  .step-icon-wrap {
+    width: 40px;
+    height: 40px;
+  }
+  .step-icon-wrap svg {
+    width: 18px;
+    height: 18px;
+  }
+  .step-title {
+    font-size: 20px;
+  }
+  .step-desc {
+    font-size: 13.5px;
+  }
+}
+
+/* Proof Section Styles */
 .proof-section{max-width:1200px;margin:0 auto;padding:0 6vw 40px;text-align:center;}
 .proof-card-single{margin-top:10px;max-width:540px;margin-inline:auto;padding:36px;border-radius:16px;background:var(--surface);border:1px solid var(--border);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 4px 20px rgba(0,0,0,0.2);transition:all .3s ease;}
 .proof-card-single:hover{border-color:rgba(255,77,0,0.25);transform:translateY(-4px);box-shadow:0 8px 30px rgba(255,77,0,0.15);}
@@ -234,6 +476,234 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(circle 
 .insta-btn:active{background:linear-gradient(135deg, #E4405F 0%, #F77737 50%, #FCAF45 100%);}
 .insta-btn-icon{width:20px;height:20px;object-fit:contain;}
 .insta-btn-fallback{color:#E4405F;display:inline-block;}
+
+/* Pulsing Animations */
+@keyframes waPulse {
+  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+  70% { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+@keyframes orangePulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 77, 0, 0.4); }
+  70% { box-shadow: 0 0 0 12px rgba(255, 77, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 77, 0, 0); }
+}
+.wa-btn {
+  animation: waPulse 2s infinite;
+}
+.btn-primary, .price-card.popular .price-cta {
+  animation: orangePulse 2.5s infinite;
+}
+
+/* Reviews Style */
+.reviews-section {
+  max-width: 1200px;
+  margin: 0 auto 40px;
+  padding: 0 6vw;
+}
+.reviews-controls {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+.reviews-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  position: relative;
+}
+.review-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+  animation: slideInUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.review-card:hover {
+  border-color: rgba(255, 77, 0, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(255, 77, 0, 0.08);
+}
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+.review-client-info h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.04em;
+  color: #fff;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+}
+.review-insta-link {
+  font-size: 12.5px;
+  color: var(--accent2);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: opacity 0.2s;
+}
+.review-insta-link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+.review-stars {
+  color: var(--accent2);
+  font-size: 16px;
+  display: flex;
+  gap: 2px;
+}
+.review-comment {
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.6;
+  font-style: italic;
+  margin-bottom: 14px;
+}
+.review-date {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+  text-align: right;
+}
+.review-loader {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+/* Modal Styles */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+.modal-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+.modal-card {
+  background: #111;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 480px;
+  padding: 36px;
+  position: relative;
+  transform: scale(0.9) translateY(20px);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 20px 80px rgba(0,0,0,0.8);
+}
+.modal-backdrop.active .modal-card {
+  transform: scale(1) translateY(0);
+}
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 28px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.modal-close:hover {
+  color: #fff;
+}
+.modal-header {
+  margin-bottom: 24px;
+}
+.modal-header h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.04em;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.modal-header p {
+  font-size: 13.5px;
+  color: var(--muted);
+}
+.form-group {
+  margin-bottom: 20px;
+}
+.form-group label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #aaa;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.form-group input[type="text"],
+.form-group textarea {
+  width: 100%;
+  background: #181818;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: #1e1e1e;
+}
+.rating-select {
+  display: flex;
+  gap: 8px;
+  font-size: 28px;
+  color: #333;
+  cursor: pointer;
+}
+.rating-select span {
+  transition: color 0.2s, transform 0.1s;
+}
+.rating-select span:hover {
+  transform: scale(1.15);
+}
+.rating-select span.selected,
+.rating-select span.hovered {
+  color: var(--accent2);
+  text-shadow: 0 0 10px rgba(255, 183, 0, 0.4);
+}
+
 
 /* --- MOTION SYSTEM CSS --- */
 :root {
@@ -366,7 +836,7 @@ body::before {
 .hero-wrap { transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.4s ease, filter 1.4s ease; transform-origin: center top; }
 .hero-exit { transform: scale(0.9) translateY(-100px); opacity: 0.1; filter: blur(12px); pointer-events: none; }
 
-.section-head, .services > * { 
+.section-head, .pricing-grid > * { 
   opacity: 0; 
   transform: translateY(120px) scale(0.92); 
   filter: blur(15px);
@@ -375,13 +845,10 @@ body::before {
 
 .reveal-active { opacity: 1 !important; transform: translateY(0) scale(1) !important; filter: blur(0) !important; }
 
-/* Staggered delays for services - Longer for more "feel" */
-.services > *:nth-child(1) { transition-delay: 0.2s; }
-.services > *:nth-child(2) { transition-delay: 0.4s; }
-.services > *:nth-child(3) { transition-delay: 0.6s; }
-.services > *:nth-child(4) { transition-delay: 0.8s; }
-.services > *:nth-child(5) { transition-delay: 1.0s; }
-.services > *:nth-child(6) { transition-delay: 1.2s; }
+/* Staggered delays for pricing cards - Longer for more "feel" */
+.pricing-grid > *:nth-child(1) { transition-delay: 0.2s; }
+.pricing-grid > *:nth-child(2) { transition-delay: 0.4s; }
+.pricing-grid > *:nth-child(3) { transition-delay: 0.6s; }
 
 
 /* I-DOT DROP & SPIN ANIMATION */
@@ -575,7 +1042,10 @@ body::before {
     font-size: 24px;
   }
   .nav-cta {
-    display: none;
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 14px;
+    margin-right: 12px;
   }
   .menu-btn.active span:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
@@ -713,11 +1183,30 @@ body::before {
   line-height: 1.1;
   margin-bottom: 16px;
 }
-.about-bio p {
+.about-p {
   color: var(--muted);
   font-size: 15px;
   line-height: 1.7;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
+}
+.about-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.about-badge {
+  background: rgba(255, 77, 0, 0.06);
+  border: 1px solid rgba(255, 77, 0, 0.2);
+  color: var(--accent2);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.05em;
+  padding: 6px 14px;
+  border-radius: 99px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 .about-features {
   display: flex;
@@ -939,103 +1428,61 @@ body::before {
 
 </section>
 
-<!-- SERVICES -->
+<!-- SERVICES / PRICING -->
 <div class="section-head" id="services">
-  <div class="section-label">WHAT I DO</div>
-  <div class="section-title">Services <span class="accent">I offer</span></div>
+  <div class="section-label">PRICING PACKAGES</div>
+  <div class="section-title">Choose Your <span class="accent">Package</span></div>
 </div>
 
-<div class="grid">
-  <div class="card">
-    <div class="card-header">
-      <div class="icon-box">
-        <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.5"/></svg>
-      </div>
-      <div class="card-title typewrite" data-text="Reels &amp; Short Video Editing">Reels &amp; Short Video Editing</div>
+<div class="pricing-grid">
+  <!-- Card 1: Basic -->
+  <div class="price-card stagger-item">
+    <div class="price-header">
+      <div class="price-title typewrite" data-text="Basic Package">Basic Package</div>
+      <div class="price-amount">₹500 - ₹800 <span>/ reel</span></div>
+      <p class="price-desc typewrite" data-text="Ideal for creators starting out with simple vertical videos, TikToks, Reels, or YouTube Shorts.">Ideal for creators starting out with simple vertical videos, TikToks, Reels, or YouTube Shorts.</p>
     </div>
-    <div class="card-desc typewrite" data-text="Instagram reels &amp; YouTube Shorts built to stop the scroll — every cut, transition, and beat drop intentional.">Instagram reels &amp; YouTube Shorts built to stop the scroll — every cut, transition, and beat drop intentional.</div>
-    <ul class="feature-list">
-      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="Scroll-stop cuts &amp; beat-synced transitions">Scroll-stop cuts &amp; beat-synced transitions</span></li>
-      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="Motion graphics matched to your brand colors">Motion graphics matched to your brand colors</span></li>
-      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="Styled captions, color grade &amp; music sync">Styled captions, color grade &amp; music sync</span></li>
-      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="AI stock clips &amp; visuals used for better results">AI stock clips &amp; visuals used for better results</span></li>
+    <ul class="price-features">
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="Scroll-stop cuts &amp; sound sync">Scroll-stop cuts &amp; sound sync</span></li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="Basic styled subtitles &amp; overlays">Basic styled subtitles &amp; overlays</span></li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="2 revision rounds included">2 revision rounds included</span></li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="3 days turnaround time">3 days turnaround time</span></li>
     </ul>
-    <div class="tags">
-      <span class="tag">After Effects</span>
-      <span class="tag">Motion Graphics</span>
-      <span class="tag">Color Grade</span>
-      <span class="tag">Captions</span>
-      <span class="tag">Music Sync</span>
-    </div>
-    <div class="price">Starting ₹500 / reel</div>
-    <div class="price-note">Final price depends on complexity &amp; visual demand</div>
+    <a class="price-cta" href="https://wa.me/9199495542?text=Hi%20Shivam%2C%20I%20want%20to%20discuss%20the%20Basic%20Package%20for%20my%20videos." target="_blank">Get Started</a>
   </div>
 
-  <div class="card">
-    <div class="card-header">
-      <div class="icon-box">
-        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-      </div>
-      <div class="card-title typewrite" data-text="YouTube Video Editing">YouTube Video Editing</div>
+  <!-- Card 2: Standard (Popular) -->
+  <div class="price-card popular stagger-item">
+    <div class="popular-badge">Most Popular</div>
+    <div class="price-header">
+      <div class="price-title typewrite" data-text="Standard Package">Standard Package</div>
+      <div class="price-amount">₹1000 - ₹1500 <span>/ reel</span></div>
+      <p class="price-desc typewrite" data-text="High-retention edits with advanced sound design, custom branding, motion graphics, and stock overlays.">High-retention edits with advanced sound design, custom branding, motion graphics, and stock overlays.</p>
     </div>
-    <div class="card-desc typewrite" data-text="Long-form edits that keep viewers watching — structured, engaging, and export-ready for growth.">Long-form edits that keep viewers watching — structured, engaging, and export-ready for growth.</div>
-    <ul class="feature-list">
-      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="Cinematic intros &amp; scroll-stop hooks">Cinematic intros &amp; scroll-stop hooks</span></li>
-      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="Chapters, pacing &amp; retention-focused cuts">Chapters, pacing &amp; retention-focused cuts</span></li>
-      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="Motion graphics &amp; animated overlays">Motion graphics &amp; animated overlays</span></li>
-      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="AI stock clips integrated mid-video — no raw footage needed">AI stock clips integrated mid-video — no raw footage needed</span></li>
-      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="Faceless channel-ready edits with a strong hook and clean brand polish.">Faceless channel-ready edits with a strong hook and clean brand polish.</span></li>
+    <ul class="price-features">
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="Advanced typography &amp; auto-captions">Advanced typography &amp; auto-captions</span></li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="Premium sound design &amp; sound effects">Premium sound design &amp; sound effects</span></li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="AI stock footages &amp; premium assets">AI stock footages &amp; premium assets</span></li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="Unlimited revisions until perfect">Unlimited revisions until perfect</span></li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="Priority delivery in 24-48 hours">Priority delivery in 24-48 hours</span></li>
     </ul>
-    <div class="tags">
-      <span class="tag">After Effects</span>
-      <span class="tag">Motion Graphics</span>
-      <span class="tag">AI Stock Clips</span>
-      <span class="tag">Chapters</span>
-      <span class="tag">Thumbnail Export</span>
-    </div>
-    <div class="price">Starting ₹1500 / video</div>
-    <div class="price-note">Final price depends on video length &amp; edit complexity</div>
+    <a class="price-cta" href="https://wa.me/9199495542?text=Hi%20Shivam%2C%20I%20want%20to%20discuss%20the%20Standard%20Package%20for%20my%20videos." target="_blank">Get Started</a>
   </div>
 
-  <div class="delivery-card">
-    <div class="card-header" style="margin-bottom:6px;">
-      <div class="icon-box">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      </div>
-      <div>
-        <div class="card-title typewrite" data-text="Delivery &amp; Pricing">Delivery &amp; Pricing</div>
-        <div style="font-size:12px;color:#8e8e8e;margin-top:4px;"><span class="typewrite" data-text="Transparent timelines. No hidden charges.">Transparent timelines. No hidden charges.</span></div>
-      </div>
+  <!-- Card 3: Premium -->
+  <div class="price-card stagger-item">
+    <div class="price-header">
+      <div class="price-title typewrite" data-text="Premium Package">Premium Package</div>
+      <div class="price-amount">₹2000+ <span>/ video</span></div>
+      <p class="price-desc typewrite" data-text="Full YouTube long-form videos, high-end faceless editing, cinematic storytelling, and customized assets.">Full YouTube long-form videos, high-end faceless editing, cinematic storytelling, and customized assets.</p>
     </div>
-    <div class="delivery-grid">
-      <div class="d-item">
-        <div class="d-icon">
-          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="9 16 11 18 15 14"/></svg>
-        </div>
-        <div>
-          <div class="d-label typewrite" data-text="Delivery within 3 days">Delivery within 3 days</div>
-          <div class="d-sub typewrite" data-text="Timeline depends on video type, length &amp; revision rounds">Timeline depends on video type, length &amp; revision rounds</div>
-        </div>
-      </div>
-      <div class="d-item">
-        <div class="d-icon">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-        </div>
-        <div>
-          <div class="d-label typewrite" data-text="Pricing starts at ₹500">Pricing starts at ₹500</div>
-          <div class="d-sub typewrite" data-text="Scales up based on visual complexity, motion graphics &amp; your requirements">Scales up based on visual complexity, motion graphics &amp; your requirements</div>
-        </div>
-      </div>
-      <div class="d-item">
-        <div class="d-icon">
-          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        </div>
-        <div>
-          <div class="d-label typewrite" data-text="Custom quote available">Custom quote available</div>
-          <div class="d-sub typewrite" data-text="DM with your brief — I'll give an exact price &amp; timeline before we start">DM with your brief — I'll give an exact price &amp; timeline before we start</div>
-        </div>
-      </div>
-    </div>
+    <ul class="price-features">
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="Cinematic long-form edits &amp; hooks">Cinematic long-form edits &amp; hooks</span></li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="Pacing &amp; retention-focused storytelling">Pacing &amp; retention-focused storytelling</span></li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="Full thumbnail design support">Full thumbnail design support</span></li>
+      <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span class="typewrite" data-text="Dedicated support &amp; direct calls">Dedicated support &amp; direct calls</span></li>
+    </ul>
+    <a class="price-cta" href="https://wa.me/9199495542?text=Hi%20Shivam%2C%20I%20want%20to%20discuss%20the%20Premium%20Package%20for%20my%20long%20videos." target="_blank">Get Started</a>
   </div>
 </div>
 
@@ -1047,31 +1494,43 @@ body::before {
 
 <div class="process">
   <div class="process-step">
-    <div class="step-num">01</div>
+    <div class="step-icon-wrap">
+      <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    </div>
     <div class="step-content">
       <div class="step-title">Message me on WhatsApp</div>
       <div class="step-desc">Tell me what you need, your deadline, and budget. No formalities, just a quick chat.</div>
+      <div class="step-bg-num">01</div>
     </div>
   </div>
   <div class="process-step">
-    <div class="step-num">02</div>
+    <div class="step-icon-wrap">
+      <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><polyline points="12 11 12 17"/><polyline points="9 14 12 11 15 14"/></svg>
+    </div>
     <div class="step-content">
       <div class="step-title">Share your footage</div>
       <div class="step-desc">Send via Google Drive or WeTransfer. For AI videos, just a brief description is enough.</div>
+      <div class="step-bg-num">02</div>
     </div>
   </div>
   <div class="process-step">
-    <div class="step-num">03</div>
+    <div class="step-icon-wrap">
+      <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+    </div>
     <div class="step-content">
       <div class="step-title">Edit + Review</div>
       <div class="step-desc">Draft ready in 24–72 hours. Free revisions until you're completely satisfied.</div>
+      <div class="step-bg-num">03</div>
     </div>
   </div>
   <div class="process-step">
-    <div class="step-num">04</div>
+    <div class="step-icon-wrap">
+      <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="12" y1="4" x2="12" y2="20"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+    </div>
     <div class="step-content">
       <div class="step-title">Final delivery + payment</div>
       <div class="step-desc">Receive your files and pay via UPI. Long-term clients get special discounts.</div>
+      <div class="step-bg-num">04</div>
     </div>
   </div>
 </div>
@@ -1105,8 +1564,14 @@ body::before {
     <!-- Right Column: Creative Bio -->
     <div class="about-bio">
       <h3>I turn raw footage into high-retention stories.</h3>
-      <p>I am a creative Video Editor and AI Specialist focused on crafting high-performing vertical reels, YouTube content, and custom visual assets. I help creators, brands, and businesses capture their audience's attention in the first 3 seconds and maintain high engagement throughout the video.</p>
+      <p class="about-p">Editing videos in my room, powered by caffeine and high-retention hacks. Based in India, editing for creators worldwide.</p>
       
+      <div class="about-badges">
+        <span class="about-badge">🇮🇳 Based in India</span>
+        <span class="about-badge">⏳ 2+ Years Editing</span>
+        <span class="about-badge">🎥 50+ Videos Done</span>
+      </div>
+
       <div class="about-features">
         <div class="about-feat">
           <span class="feat-icon">⚡</span>
@@ -1164,6 +1629,58 @@ body::before {
   </div>
 </section>
 
+<!-- TESTIMONIALS / REVIEWS SECTION -->
+<div class="section-head" id="reviews">
+  <div class="section-label">CLIENT FEEDBACK</div>
+  <div class="section-title">Reviews &amp; <span class="accent">Testimonials</span></div>
+</div>
+
+<div class="reviews-section">
+  <div class="reviews-controls">
+    <button class="btn-primary" id="openReviewModalBtn">✨ Leave a Review</button>
+  </div>
+  <div class="reviews-container" id="reviewsGrid">
+    <div class="review-loader">Loading reviews...</div>
+  </div>
+</div>
+
+<!-- LEAVE A REVIEW MODAL -->
+<div class="modal-backdrop" id="reviewModal">
+  <div class="modal-card">
+    <button class="modal-close" id="closeReviewModalBtn">&times;</button>
+    <div class="modal-header">
+      <h3>Leave a Review</h3>
+      <p>Share your experience working with me!</p>
+    </div>
+    <form id="reviewForm">
+      <div class="form-group">
+        <label for="reviewName">Your Name *</label>
+        <input type="text" id="reviewName" required placeholder="e.g. John Doe">
+      </div>
+      <div class="form-group">
+        <label for="reviewInsta">Instagram Handle (Optional)</label>
+        <input type="text" id="reviewInsta" placeholder="e.g. @john_edits">
+      </div>
+      <div class="form-group">
+        <label>Rating *</label>
+        <div class="rating-select" id="ratingSelect">
+          <span data-val="1">★</span>
+          <span data-val="2">★</span>
+          <span data-val="3">★</span>
+          <span data-val="4">★</span>
+          <span data-val="5" class="selected">★</span>
+        </div>
+        <input type="hidden" id="reviewRating" value="5">
+      </div>
+      <div class="form-group">
+        <label for="reviewComment">Review Comment *</label>
+        <textarea id="reviewComment" rows="4" required placeholder="What was it like working with Shivam?"></textarea>
+      </div>
+      <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">Submit Review</button>
+    </form>
+  </div>
+</div>
+
 <!-- BOTTOM CTA -->
 <div class="bottom-cta">
   <h2>Ready to work together?</h2>
@@ -1181,9 +1698,18 @@ body::before {
   </a>
 </div>
 
-<script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+// Safe document ready handler to prevent readyState race conditions
+function runWhenReady(fn) {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fn);
+  } else {
+    fn();
+  }
+}
+
 // ---- MOBILE MENU NAV TOGGLE ----
-document.addEventListener('DOMContentLoaded', () => {
+runWhenReady(() => {
   const menuBtn = document.querySelector('.menu-btn');
   const navLinks = document.querySelector('.nav-links');
   if (menuBtn && navLinks) {
@@ -1212,7 +1738,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ---- CURSOR GLOW EVENT HANDLER ----
-document.addEventListener('DOMContentLoaded', () => {
+runWhenReady(() => {
   const glow = document.getElementById('cursorGlow');
   if (glow) {
     document.addEventListener('mousemove', (e) => {
@@ -1249,11 +1775,10 @@ document.querySelectorAll('video.vid').forEach(v => {
   v.addEventListener('volumechange', () => syncMuteState(v));
   
   v.addEventListener('pause', () => {
-    const card = v.closest('.scard');
-    if (card && +card.dataset.pos === 0 && v.classList.contains('v-active')) {
-      if (stackWrapInView) {
-        v.setAttribute('data-user-paused', 'true');
-      }
+    if (v.getAttribute('data-programmatic') === 'true') {
+      v.removeAttribute('data-programmatic');
+    } else {
+      v.setAttribute('data-user-paused', 'true');
     }
   });
   
@@ -1279,7 +1804,10 @@ const scrollObserver = new IntersectionObserver((entries) => {
     } else {
       stackWrapInView = false;
       // Pause all videos when hero is out of view
-      document.querySelectorAll('video.vid').forEach(v => v.pause());
+      document.querySelectorAll('video.vid').forEach(v => {
+        v.setAttribute('data-programmatic', 'true');
+        v.pause();
+      });
     }
   });
 }, { threshold: 0.5 }); // Pause as soon as 50% of the video is out of view
@@ -1289,7 +1817,7 @@ scrollObserver.observe(stackWrap);
 // --- PREMIUM WORK TRANSITION ---
 const workBtn = document.getElementById('workBtn');
 const hero = document.querySelector('.hero-wrap');
-const serviceItems = [document.querySelector('.section-head'), ...document.querySelectorAll('.services > *')];
+const serviceItems = [document.querySelector('.section-head'), ...document.querySelectorAll('.pricing-grid > *')];
 
 workBtn.addEventListener('click', (e) => {
   e.preventDefault();
@@ -1455,6 +1983,7 @@ function render(skipTransition = false, skipReset = []) {
           const p = v.play(); if (p) p.catch(() => { v.muted=true; globalMuted=true; v.play().catch(()=>{}); });
         }
       } else {
+        v.setAttribute('data-programmatic', 'true');
         v.pause(); v.muted = true;
         if (pos !== 0) {
           v.currentTime = 0;
@@ -1592,7 +2121,7 @@ function onDragEnd() {
     card.style.transform  = '';
     card.style.opacity    = '';
     card.offsetHeight; // reflow
-    if (dx < 0) advance(1);
+    if (0 > dx) advance(1);
     else         advance(-1);
   } else {
     // Spring back to original position
@@ -1630,7 +2159,7 @@ stackWrap.addEventListener('touchmove', e => {
   if (!drag.directionLocked) {
     const dx = Math.abs(tx - drag.startX);
     const dy = Math.abs(ty - drag.startY);
-    if (dx < 5 && dy < 5) return; // Not moved enough yet
+    if (5 > dx && 5 > dy) return; // Not moved enough yet
     drag.directionLocked = true;
     drag.isHorizontal = dx >= dy; // true = horizontal swipe
 
@@ -1701,6 +2230,7 @@ cards.forEach((c, i) => {
       pills[0].classList.toggle('p-on', isLeft);     pills[1].classList.toggle('p-on', !isLeft);
       
       // Play new, pause old
+      currentVid.setAttribute('data-programmatic', 'true');
       currentVid.pause();
       nextVid.removeAttribute('data-user-paused');
       nextVid.play().catch(e => {});
@@ -1709,7 +2239,7 @@ cards.forEach((c, i) => {
 });
 
 // ---- EVERY-VISIT ONBOARDING GUIDE ----
-document.addEventListener('DOMContentLoaded', () => {
+runWhenReady(() => {
   const guide   = document.getElementById('stackGuide');
   const glow    = document.getElementById('stackGlow');
   const activeCard = cards.find(c => +c.dataset.pos === 0);
@@ -1745,7 +2275,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ---- SKELETON LOADER LOGIC ----
-document.addEventListener('DOMContentLoaded', () => {
+runWhenReady(() => {
   const loader = document.getElementById('skeletonLoader');
   if (loader) {
     loader.classList.add('hidden');
@@ -1761,7 +2291,7 @@ function typeWriter(el, text, delay = 0) {
   let index = 0;
   setTimeout(() => {
     const step = () => {
-      if (index < spans.length) {
+      if (spans.length > index) {
         spans[index].style.opacity = '1';
         index += 1;
         setTimeout(step, 15 + Math.random() * 10);
@@ -1797,6 +2327,284 @@ if (servicesSection) {
 
 // Initialize first frame and video play
 render(true);
+
+// ---- REVIEWS & SUPABASE INTEGRATION ----
+const SUPABASE_URL = ""; // Fill this in when ready
+const SUPABASE_ANON_KEY = ""; // Fill this in when ready
+
+let supabaseClient = null;
+if (SUPABASE_URL && SUPABASE_ANON_KEY) {
+  try {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  } catch (err) {
+    console.error("Supabase initialization error:", err);
+  }
+}
+
+// Default reviews to show if no database or local reviews exist
+const DEFAULT_REVIEWS = [
+  {
+    name: "Aman Sharma",
+    instagram: "@aman_edits",
+    rating: 5,
+    comment: "Amazing edits! Shivam understands retention and pacing better than anyone else. My Reels views went up by 3x after working with him.",
+    created_at: new Date(Date.now() - 86400000 * 3).toISOString()
+  },
+  {
+    name: "Rehan Khan",
+    instagram: "@rehan_fx",
+    rating: 5,
+    comment: "Fast delivery and perfect sound design. Revisions were done super quickly. Highly recommended for long-term projects!",
+    created_at: new Date(Date.now() - 86400000 * 5).toISOString()
+  },
+  {
+    name: "Sara Kapoor",
+    instagram: "@sara_vlogs",
+    rating: 5,
+    comment: "Working with Shivam was so smooth. The AI video elements he added were mindblowing. Definitely ordering again!",
+    created_at: new Date(Date.now() - 86400000 * 7).toISOString()
+  }
+];
+
+// Load reviews
+async function loadReviews() {
+  const grid = document.getElementById('reviewsGrid');
+  if (!grid) return;
+  grid.innerHTML = '<div class="review-loader">Loading reviews...</div>';
+
+  let reviews = [];
+
+  if (supabaseClient) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('reviews')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      reviews = data || [];
+    } catch (err) {
+      console.warn("Supabase fetch failed, falling back to local reviews:", err);
+      reviews = getLocalReviews();
+    }
+  } else {
+    reviews = getLocalReviews();
+  }
+
+  grid.innerHTML = '';
+  if (reviews.length === 0) {
+    grid.innerHTML = '<div class="review-loader">No reviews yet. Be the first to leave one!</div>';
+    return;
+  }
+
+  reviews.forEach(review => {
+    addNewReviewToUI(review, false);
+  });
+}
+
+function getLocalReviews() {
+  try {
+    const stored = localStorage.getItem('shivam_creates_reviews');
+    if (stored) {
+      return JSON.parse(stored);
+    }
+    localStorage.setItem('shivam_creates_reviews', JSON.stringify(DEFAULT_REVIEWS));
+  } catch (e) {
+    console.warn("localStorage is not accessible, using default reviews:", e);
+  }
+  return DEFAULT_REVIEWS;
+}
+
+function saveLocalReview(review) {
+  try {
+    const reviews = getLocalReviews();
+    reviews.unshift(review);
+    localStorage.setItem('shivam_creates_reviews', JSON.stringify(reviews));
+  } catch (e) {
+    console.warn("localStorage is not writable, review not saved locally:", e);
+  }
+}
+
+function addNewReviewToUI(review, animate = false) {
+  const grid = document.getElementById('reviewsGrid');
+  if (!grid) return;
+
+  // Remove loader if present
+  const loader = grid.querySelector('.review-loader');
+  if (loader) loader.remove();
+
+  const card = document.createElement('div');
+  card.className = 'review-card';
+  if (animate) {
+    card.style.animation = 'slideInUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) both';
+  }
+
+  const starsHtml = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+  const instaHtml = review.instagram 
+    ? `<a href="https://instagram.com/${review.instagram.replace('@', '')}" target="_blank" class="review-insta-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        ${review.instagram}
+       </a>` 
+    : '';
+
+  const dateStr = new Date(review.created_at).toLocaleDateString('en-IN', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric'
+  });
+
+  card.innerHTML = `
+    <div>
+      <div class="review-header">
+        <div class="review-client-info">
+          <h4>${escapeHTML(review.name)}</h4>
+          ${instaHtml}
+        </div>
+        <div class="review-stars">${starsHtml}</div>
+      </div>
+      <p class="review-comment">"${escapeHTML(review.comment)}"</p>
+    </div>
+    <div class="review-date">${dateStr}</div>
+  `;
+
+  if (animate) {
+    grid.insertBefore(card, grid.firstChild);
+  } else {
+    grid.appendChild(card);
+  }
+}
+
+function escapeHTML(str) {
+  if (!str) return '';
+  return String(str).replace(/[&\x3c>'"]/g, 
+    tag => ({
+      '&': '&amp;',
+      '\x3c': '&lt;',
+      '>': '&gt;',
+      "'": '&#39;',
+      '"': '&quot;'
+    }[tag] || tag)
+  );
+}
+
+// Modal handling
+runWhenReady(() => {
+  const modal = document.getElementById('reviewModal');
+  const openBtn = document.getElementById('openReviewModalBtn');
+  const closeBtn = document.getElementById('closeReviewModalBtn');
+  const form = document.getElementById('reviewForm');
+  const ratingSelect = document.getElementById('ratingSelect');
+  const ratingInput = document.getElementById('reviewRating');
+
+  if (openBtn && modal) {
+    openBtn.addEventListener('click', () => {
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  }
+
+  if (closeBtn && modal) {
+    closeBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+
+  // Star selector
+  if (ratingSelect) {
+    const stars = ratingSelect.querySelectorAll('span');
+    stars.forEach(star => {
+      star.addEventListener('click', () => {
+        const val = parseInt(star.dataset.val);
+        ratingInput.value = val;
+        stars.forEach(s => {
+          s.classList.toggle('selected', val >= parseInt(s.dataset.val));
+        });
+      });
+      star.addEventListener('mouseenter', () => {
+        const val = parseInt(star.dataset.val);
+        stars.forEach(s => {
+          s.classList.toggle('hovered', val >= parseInt(s.dataset.val));
+        });
+      });
+      ratingSelect.addEventListener('mouseleave', () => {
+        stars.forEach(s => s.classList.remove('hovered'));
+      });
+    });
+  }
+
+  // Submit form
+  if (form) {
+    const stars = ratingSelect ? ratingSelect.querySelectorAll('span') : [];
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('reviewName').value.trim();
+      let instagram = document.getElementById('reviewInsta').value.trim();
+      const rating = parseInt(ratingInput.value);
+      const comment = document.getElementById('reviewComment').value.trim();
+
+      if (instagram && !instagram.startsWith('@')) {
+        instagram = '@' + instagram;
+      }
+
+      const newReview = {
+        name,
+        instagram,
+        rating,
+        comment,
+        created_at: new Date().toISOString()
+      };
+
+      if (supabaseClient) {
+        try {
+          const { error } = await supabaseClient
+            .from('reviews')
+            .insert([{ name, instagram, rating, comment }]);
+          
+          if (error) throw error;
+        } catch (err) {
+          console.error("Error saving to Supabase, saving locally instead:", err);
+          saveLocalReview(newReview);
+          addNewReviewToUI(newReview, true);
+        }
+      } else {
+        saveLocalReview(newReview);
+        addNewReviewToUI(newReview, true);
+      }
+
+      // Reset form & close modal
+      form.reset();
+      stars.forEach(s => s.classList.toggle('selected', 5 >= parseInt(s.dataset.val)));
+      ratingInput.value = 5;
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+
+      // Scroll to reviews section to see the new review animate in
+      const revSec = document.getElementById('reviews');
+      if (revSec) revSec.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+
+  // Load reviews initial
+  loadReviews();
+
+  // Supabase Realtime Subscription
+  if (supabaseClient) {
+    supabaseClient
+      .channel('public:reviews')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'reviews' }, payload => {
+        addNewReviewToUI(payload.new, true);
+      })
+      .subscribe();
+  }
+});
 </script>
 
 </body>
