@@ -3061,31 +3061,27 @@ async function loadReviews() {
   });
 }
 
-function mergeReviews(remoteReviews, localReviews) {
+function reviewKey(review) {
+  return `${(review.name || '').trim().toLowerCase()}|${(review.instagram || '').trim().toLowerCase()}|${(review.comment || '').trim().toLowerCase()}|${String(review.rating || '').trim()}|${(review.reason || '').trim().toLowerCase()}`;
+}
+
+function dedupeReviews(reviews) {
   const seen = new Set();
-  const merged = [];
-
-  function reviewKey(review) {
-    return `${(review.name || '').trim().toLowerCase()}|${(review.instagram || '').trim().toLowerCase()}|${(review.comment || '').trim().toLowerCase()}|${(review.created_at || '').trim()}`;
-  }
-
-  for (const review of remoteReviews) {
+  const deduped = [];
+  for (const review of reviews) {
     const key = reviewKey(review);
     if (!seen.has(key)) {
       seen.add(key);
-      merged.push(review);
+      deduped.push(review);
     }
   }
+  return deduped;
+}
 
-  for (const review of localReviews) {
-    const key = reviewKey(review);
-    if (!seen.has(key)) {
-      seen.add(key);
-      merged.push(review);
-    }
-  }
-
-  return merged.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+function mergeReviews(remoteReviews, localReviews) {
+  const merged = [...remoteReviews, ...localReviews];
+  const unique = dedupeReviews(merged);
+  return unique.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 }
 
 function getLocalReviews() {
@@ -3094,10 +3090,11 @@ function getLocalReviews() {
     if (stored) {
       const parsed = JSON.parse(stored);
       const filtered = Array.isArray(parsed) ? parsed.filter(review => !isFakeReview(review)) : [];
-      if (Array.isArray(parsed) && filtered.length !== parsed.length) {
-        localStorage.setItem('shivam_creates_reviews', JSON.stringify(filtered));
+      const deduped = Array.isArray(filtered) ? dedupeReviews(filtered) : [];
+      if (Array.isArray(parsed) && deduped.length !== parsed.length) {
+        localStorage.setItem('shivam_creates_reviews', JSON.stringify(deduped));
       }
-      return filtered;
+      return deduped;
     }
   } catch (e) {
     console.warn("localStorage is not accessible, using empty review state:", e);
@@ -3108,8 +3105,11 @@ function getLocalReviews() {
 function saveLocalReview(review) {
   try {
     const reviews = getLocalReviews();
-    reviews.unshift(review);
-    localStorage.setItem('shivam_creates_reviews', JSON.stringify(reviews));
+    const key = reviewKey(review);
+    if (!reviews.some(r => reviewKey(r) === key)) {
+      reviews.unshift(review);
+      localStorage.setItem('shivam_creates_reviews', JSON.stringify(reviews));
+    }
   } catch (e) {
     console.warn("localStorage is not writable, review not saved locally:", e);
   }
@@ -3512,9 +3512,11 @@ runWhenReady(() => {
             created_at: newReview.created_at
           };
           console.log('🚀 Attempting Supabase insert with data:', supabaseData);
-          const { error } = await supabaseClient
+          const { data, error } = await supabaseClient
             .from('reviews')
-            .insert([supabaseData]);
+            .insert([supabaseData])
+            .select()
+            .single();
           if (error) {
             console.error('❌ Supabase insert error:', {
               message: error.message,
@@ -3525,10 +3527,10 @@ runWhenReady(() => {
             });
             throw error;
           }
-          console.log('✅ Supabase insert successful!');
+          console.log('✅ Supabase insert successful!', data);
           savedToSupabase = true;
-          saveLocalReview(newReview);
-          addNewReviewToUI(newReview, true);
+          const savedReview = data || newReview;
+          addNewReviewToUI(savedReview, true);
           setFormMessage('');
           showToast('🎉 Your review is now live! Thank you!', 'success');
           showSidePopup('Thanks for the review — I’ll make it shine!', 'success');
