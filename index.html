@@ -3496,7 +3496,13 @@ runWhenReady(() => {
           showSidePopup('Thank you for reviewing — your feedback is live!', 'success');
           playSuccessChime();
         } catch (err) {
-          console.error('Supabase error, falling back to local:', err);
+          console.error('Supabase insert error details:', {
+            message: err?.message,
+            code: err?.code,
+            details: err?.details,
+            hint: err?.hint,
+            fullError: err
+          });
           saveLocalReview(newReview);
           addNewReviewToUI(newReview, true);
           setFormMessage('Saved locally because Supabase was unavailable. It will become public once sync works.');
