@@ -360,18 +360,19 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(circle 
   }
 }
 .popular-badge {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  display: inline-block;
+  margin-bottom: 14px;
   background: var(--accent-gradient);
   color: #0d0d0d;
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 14px;
-  letter-spacing: 0.05em;
+  font-size: 13px;
+  letter-spacing: 0.08em;
   padding: 4px 14px;
   border-radius: 99px;
   font-weight: 600;
   box-shadow: 0 4px 15px rgba(255,77,0,0.3);
+  position: relative;
+  z-index: 2;
 }
 .price-header {
   margin-bottom: 24px;
@@ -1719,7 +1720,7 @@ body::before {
   <!-- Card 2: Standard (Popular) -->
   <div class="price-card popular stagger-item" style="position:relative;overflow:hidden;">
     <canvas class="section-particles" data-color1="255,77,0" data-color2="255,160,0" data-fire="true" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.85;"></canvas>
-    <div class="popular-badge" style="position:relative;z-index:2;">Most Popular</div>
+    <div class="popular-badge">🔥 Most Popular</div>
     <div class="price-header" style="position:relative;z-index:2;">
       <div class="price-title">Standard Package</div>
       <div class="price-amount">&#8377;1000 - &#8377;1500 <span>/ reel</span></div>
